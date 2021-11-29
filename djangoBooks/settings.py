@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 USE_L10N = False
 DATE_FORMAT = "Y-m-d"
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 # Application definition
 
