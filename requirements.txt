@@ -14,10 +14,12 @@ cv-bridge==1.15.0
 diagnostic-analysis==1.10.4
 diagnostic-common-diagnostics==1.10.4
 diagnostic-updater==1.10.4
+dj-database-url==0.5.0
 Django==3.2.9
 django-bootstrap-datepicker-plus==3.0.5
 django-bootstrap4==21.1
 django-crispy-forms==1.13.0
+django-heroku==0.3.1
 djangorestframework==3.12.4
 dynamic-reconfigure==1.7.1
 gazebo-plugins==2.9.2
@@ -35,6 +37,7 @@ joint-state-publisher==1.15.0
 joint-state-publisher-gui==1.15.0
 laser-geometry==1.6.7
 message-filters==1.15.13
+psycopg2==2.9.2
 python-decouple==3.5
 python-qt-binding==0.4.4
 pytz==2021.3
@@ -111,4 +114,5 @@ tf2-py==0.7.5
 tf2-ros==0.7.5
 topic-tools==1.15.13
 urllib3==1.26.7
+whitenoise==5.3.0
 xacro==1.14.10
