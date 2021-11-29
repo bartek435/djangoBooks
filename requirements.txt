@@ -12,7 +12,6 @@ psycopg2==2.9.2
 python-decouple==3.5
 pytz==2021.3
 requests==2.26.0
-resource-retriever==1.12.6
 smach==2.5.0
 smclib==1.8.6
 soupsieve==2.3.1
