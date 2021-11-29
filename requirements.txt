@@ -1,9 +1,5 @@
 asgiref==3.4.1
 beautifulsoup4==4.10.0
-certifi==2021.10.8
-diagnostic-analysis==1.10.4
-diagnostic-common-diagnostics==1.10.4
-diagnostic-updater==1.10.4
 dj-database-url==0.5.0
 Django==3.2.9
 django-bootstrap-datepicker-plus==3.0.5
