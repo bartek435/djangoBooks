@@ -1,11 +1,13 @@
-from django import forms
 from datetime import date
-from django.db.models.fields import PositiveSmallIntegerField
-from .models import BookModel
+
+from django import forms
 from bootstrap_datepicker_plus import DatePickerInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, Button
 from crispy_forms.bootstrap import FormActions
+
+from .models import BookModel
+
 
 class BookForm(forms.ModelForm):
     title = forms.CharField(label='Title', max_length=75, required=True)
@@ -22,7 +24,7 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = BookModel
         fields = '__all__'
-    
+
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -46,7 +48,7 @@ class BookForm(forms.ModelForm):
                 Submit('post', 'Add')
             )
         )
-    
+
     def clean_title(self):
         data = self.cleaned_data.get('title')
         return data
@@ -79,7 +81,7 @@ class BookForm(forms.ModelForm):
 class SearchBookForm(forms.Form):
     title = forms.CharField(label='Title', max_length=75,required = False)
     author = forms.CharField(max_length=50, required = False)
-    dateFrom = forms.DateField( 
+    dateFrom = forms.DateField(
         label="Date from",
         required = False,
         widget = DatePickerInput(format = "%Y-%m-%d")
@@ -93,7 +95,7 @@ class SearchBookForm(forms.Form):
 
     class Meta:
         fields = '__all__'
-    
+
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -112,14 +114,19 @@ class SearchBookForm(forms.Form):
             FormActions(
                 Submit('get', 'Search'),
                 Submit('get', 'Search Rest', css_class="ml-4 btn-secondary"),
-                Button('clear', 'clear', css_class="ml-4 btn-danger",onclick='window.location.href="/"')
+                Button(
+                    'clear',
+                    'clear',
+                    css_class="ml-4 btn-danger",
+                    onclick='window.location.href="/"'
+                )
             )
         )
     def clean_dateFrom(self):
         date = self.cleaned_data.get('dateFrom')
-        return date 
+        return date
     def clean_dateTo(self):
-        return self.cleanDate() 
+        return self.cleanDate()
     def cleanDate(self):
         date = []
         date.append(self.cleaned_data.get('dateFrom'))
@@ -127,7 +134,6 @@ class SearchBookForm(forms.Form):
         if None not in date and date[0] > date[1]:
             raise forms.ValidationError("Inappropriate date. Must be older than date from")
         return date[1]
-        
 
 class ImportForm(forms.Form):
     q = forms.CharField(label='Keywords', max_length=75,required = False)
@@ -138,7 +144,7 @@ class ImportForm(forms.Form):
 
     class Meta:
         fields = '__all__'
-    
+
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -162,8 +168,8 @@ class ImportForm(forms.Form):
         data = self.cleaned_data.get('isbn')
         if not data:
             return data
-        elif not data.isdigit():
+        if not data.isdigit():
             raise forms.ValidationError("ISBN must be a number")
-        elif len(data) not in [10,13]:
+        if len(data) not in [10,13]:
             raise forms.ValidationError("ISBN must be 10/13-digit long")
         return data

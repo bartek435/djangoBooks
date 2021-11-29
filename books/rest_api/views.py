@@ -1,7 +1,7 @@
-from rest_framework import status
+import datetime
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import datetime
 
 from books.models import BookModel
 from .serializers import BookSerializer
@@ -10,10 +10,9 @@ class BooksRestView(APIView):
     def get(self, request):
         kwargs = {}
         for key,value in request.GET.items():
-            if not value or key == 'get': continue
-            elif key == 'get': 
+            if not value or key == 'get':
                 continue
-            elif key == 'dateFrom':
+            if key == 'dateFrom':
                 date = datetime.datetime.strptime(value,"%Y-%m-%d")
                 kwargs['date__gte'] = date
             elif key == 'dateTo':

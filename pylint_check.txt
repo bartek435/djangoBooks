@@ -1,0 +1,137 @@
+ pylint djangoBooks/books --disable=missing-docstring --class-naming-style='PascalCase' --function-naming-style='camelCase' --variable-naming-style='snake_case' --method-naming-style='camelCase'
+ 
+ 
+************* Module books.admin
+djangoBooks/books/admin.py:1:0: W0611: Unused admin imported from django.contrib (unused-import)
+************* Module books.views
+djangoBooks/books/views.py:29:23: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+djangoBooks/books/views.py:30:22: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/views.py:33:22: C0103: Argument name "id" doesn't conform to snake_case naming style (invalid-name)
+djangoBooks/books/views.py:33:22: W0622: Redefining built-in 'id' (redefined-builtin)
+djangoBooks/books/views.py:74:23: C0103: Argument name "id" doesn't conform to snake_case naming style (invalid-name)
+djangoBooks/books/views.py:74:23: W0622: Redefining built-in 'id' (redefined-builtin)
+djangoBooks/books/views.py:77:12: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/views.py:84:8: C0103: Variable name "d" doesn't conform to snake_case naming style (invalid-name)
+djangoBooks/books/views.py:95:12: E1101: Class 'BookModel' has no 'objects' member (no-member)
+************* Module books.forms
+djangoBooks/books/forms.py:4:0: E0401: Unable to import 'bootstrap_datepicker_plus' (import-error)
+djangoBooks/books/forms.py:5:0: E0401: Unable to import 'crispy_forms.helper' (import-error)
+djangoBooks/books/forms.py:6:0: E0401: Unable to import 'crispy_forms.layout' (import-error)
+djangoBooks/books/forms.py:7:0: E0401: Unable to import 'crispy_forms.bootstrap' (import-error)
+djangoBooks/books/forms.py:24:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+djangoBooks/books/forms.py:52:4: C0103: Method name "clean_title" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:55:4: C0103: Method name "clean_author" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:58:4: C0103: Method name "clean_date" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:64:4: C0103: Method name "clean_isbn" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:71:4: C0103: Method name "clean_pages" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:74:4: C0103: Method name "clean_cover" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:77:4: C0103: Method name "clean_language" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:96:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+djangoBooks/books/forms.py:125:4: C0103: Method name "clean_dateFrom" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:126:8: W0621: Redefining name 'date' from outer scope (line 1) (redefined-outer-name)
+djangoBooks/books/forms.py:128:4: C0103: Method name "clean_dateTo" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/forms.py:131:8: W0621: Redefining name 'date' from outer scope (line 1) (redefined-outer-name)
+djangoBooks/books/forms.py:145:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+djangoBooks/books/forms.py:167:4: C0103: Method name "clean_isbn" doesn't conform to camelCase naming style (invalid-name)
+************* Module books.migrations.0001_initial
+djangoBooks/books/migrations/0001_initial.py:17:0: C0301: Line too long (117/100) (line-too-long)
+djangoBooks/books/migrations/0001_initial.py:1:0: C0103: Module name "0001_initial" doesn't conform to snake_case naming style (invalid-name)
+************* Module books.migrations.0002_auto_20211125_1040
+djangoBooks/books/migrations/0002_auto_20211125_1040.py:16:0: C0301: Line too long (117/100) (line-too-long)
+djangoBooks/books/migrations/0002_auto_20211125_1040.py:1:0: C0103: Module name "0002_auto_20211125_1040" doesn't conform to snake_case naming style (invalid-name)
+************* Module books.migrations.0004_alter_bookmodel_author
+djangoBooks/books/migrations/0004_alter_bookmodel_author.py:1:0: C0103: Module name "0004_alter_bookmodel_author" doesn't conform to snake_case naming style (invalid-name)
+************* Module books.migrations.0003_auto_20211127_2011
+djangoBooks/books/migrations/0003_auto_20211127_2011.py:1:0: C0103: Module name "0003_auto_20211127_2011" doesn't conform to snake_case naming style (invalid-name)
+************* Module books.rest_api.serializers
+djangoBooks/books/rest_api/serializers.py:1:0: E0401: Unable to import 'rest_framework' (import-error)
+djangoBooks/books/rest_api/serializers.py:5:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+djangoBooks/books/rest_api/serializers.py:4:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module books.rest_api.views
+djangoBooks/books/rest_api/views.py:3:0: E0401: Unable to import 'rest_framework.response' (import-error)
+djangoBooks/books/rest_api/views.py:4:0: E0401: Unable to import 'rest_framework.views' (import-error)
+djangoBooks/books/rest_api/views.py:22:23: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+djangoBooks/books/rest_api/views.py:23:16: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/rest_api/views.py:10:4: R0201: Method could be a function (no-self-use)
+djangoBooks/books/rest_api/views.py:9:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+************* Module books.tests.test_views
+djangoBooks/books/tests/test_views.py:8:0: R0902: Too many instance attributes (9/7) (too-many-instance-attributes)
+djangoBooks/books/tests/test_views.py:20:22: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:31:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:35:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:37:4: C0103: Method name "testEditView_GET" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:39:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:43:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:45:4: C0103: Method name "testEditView_POST" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:56:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:57:38: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:59:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:60:4: C0103: Method name "testEditView1_POST" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:71:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:72:38: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:74:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:75:4: C0103: Method name "testEditViewNoData_POST" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:77:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:78:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:78:26: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:83:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:84:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:84:26: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:87:8: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:97:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:98:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:100:12: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:102:4: C0103: Method name "testImportView_GET" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:104:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:107:4: C0103: Method name "testImportView_POST" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:108:8: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:110:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:111:27: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:113:4: C0103: Method name "testImportViewNoData_POST" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_views.py:114:8: E1101: Class 'BookModel' has no 'objects' member (no-member)
+djangoBooks/books/tests/test_views.py:116:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:117:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_views.py:117:26: E1101: Class 'BookModel' has no 'objects' member (no-member)
+************* Module books.tests.test_models
+djangoBooks/books/tests/test_models.py:7:20: E1101: Class 'BookModel' has no 'objects' member (no-member)
+************* Module books.tests.test_urls
+djangoBooks/books/tests/test_urls.py:11:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_urls.py:15:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_urls.py:19:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_urls.py:23:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+djangoBooks/books/tests/test_urls.py:27:8: W1505: Using deprecated method assertEquals() (deprecated-method)
+************* Module books.tests.test_forms
+djangoBooks/books/tests/test_forms.py:87:0: C0304: Final newline missing (missing-final-newline)
+djangoBooks/books/tests/test_forms.py:5:4: C0103: Method name "testBookForm_valid" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_forms.py:16:4: C0103: Method name "testBookForm_invalid" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_forms.py:62:4: C0103: Method name "testSearchForm_valid" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_forms.py:68:4: C0103: Method name "testSearchForm_invalid" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_forms.py:75:4: C0103: Method name "testImportForm_valid" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_forms.py:81:4: C0103: Method name "testImportForm_invalid" doesn't conform to camelCase naming style (invalid-name)
+djangoBooks/books/tests/test_forms.py:1:0: R0801: Similar lines in 2 files
+==books.rest_api.views:[12:22]
+==books.views:[19:29]
+            if not value or key == 'get':
+                continue
+            if key == 'dateFrom':
+                date = datetime.datetime.strptime(value,"%Y-%m-%d")
+                kwargs['date__gte'] = date
+            elif key == 'dateTo':
+                date = datetime.datetime.strptime(value,"%Y-%m-%d")
+                kwargs['date__lte'] = date
+            else:
+                kwargs['{}__icontains'.format(key)] = value (duplicate-code)
+djangoBooks/books/tests/test_forms.py:1:0: R0801: Similar lines in 2 files
+==books.tests.test_models:[7:15]
+==books.tests.test_views:[20:28]
+            title = 'Books App',
+            author = 'me',
+            date = "2020-03-03",
+            isbn = '1234567890123',
+            pages = 20,
+            cover = 'http://google.com',
+            language = 'eng'
+        ) (duplicate-code)
+
+------------------------------------------------------------------
+Your code has been rated at 4.75/10

@@ -1,8 +1,9 @@
+from datetime import date
 from django.test import TestCase, Client
 from django.urls import reverse
-from books.models import BookModel
 from django.forms.models import model_to_dict
-from datetime import date 
+
+from books.models import BookModel
 
 class TestViews(TestCase):
 
@@ -40,7 +41,7 @@ class TestViews(TestCase):
 
         response = self.client.get(self.edit_url_1)
         self.assertEquals(response.status_code, 200)
-    
+
     def testEditView_POST(self):
         test_dict = {
             'title': 'Test Title',
@@ -95,7 +96,7 @@ class TestViews(TestCase):
         response = self.client.get(self.search_url)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(
-            response.context['data'][0], 
+            response.context['data'][0],
             BookModel.objects.get(id=1)
         )
     def testImportView_GET(self):

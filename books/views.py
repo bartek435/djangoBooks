@@ -1,14 +1,12 @@
+import datetime
+import json
+import requests
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.forms.models import model_to_dict
-from django.utils.http import urlencode
 
 from .models import BookModel
 from .forms import BookForm, SearchBookForm, ImportForm
-
-import requests
-import datetime
-import json
 
 # Create your views here.
 def booksView(request,):
@@ -19,10 +17,9 @@ def booksView(request,):
         return redirect("/rest_books?"+request.META['QUERY_STRING'])
     if context['search_form'].is_valid():
         for key, value in query_dict.items():
-            if not value or key == 'get': continue
-            elif key == 'get': 
+            if not value or key == 'get':
                 continue
-            elif key == 'dateFrom':
+            if key == 'dateFrom':
                 date = datetime.datetime.strptime(value,"%Y-%m-%d")
                 kwargs['date__gte'] = date
             elif key == 'dateTo':
@@ -33,7 +30,7 @@ def booksView(request,):
     context['data'] = BookModel.objects.all().filter(**kwargs)
     return render(request, "books_view.html", context)
 
-def editView(request, id=None, *args, **kwargs):
+def editView(request, id=None):
     if id is not None:
         book = get_object_or_404(BookModel,id=id)
         form = BookForm(request.POST or None, instance = book)
@@ -43,10 +40,10 @@ def editView(request, id=None, *args, **kwargs):
         if form.is_valid():
             form.save()
             return redirect("/")
-    
+
     return render(request,'edit_view.html', {'form':form, 'id': id})
 
-def importView(request, id=None, ):
+def importView(request):
     form = ImportForm()
     if request.method == 'POST':
         form = ImportForm(request.POST)
@@ -60,10 +57,9 @@ def importView(request, id=None, ):
                 'subject'
             }
             for key,value in request.POST.items():
-                if key in ['get', 'q'] or not value or 'csrf' in key : 
+                if key in ['get', 'q'] or not value or 'csrf' in key :
                     continue
-                else:
-                    query_string += "+"+query_keys[key]+':'+value
+                query_string += "+"+query_keys[key]+':'+value
             imported =  HttpResponse(
                 requests.get(
                     "https://www.googleapis.com/books/v1/volumes?"+query_string
@@ -80,8 +76,8 @@ def deleteView(request,id =None):
         if id == 0:
             BookModel.objects.all().delete()
         else:
-            object = get_object_or_404(BookModel,id=id)
-            object.delete()
+            obj = get_object_or_404(BookModel,id=id)
+            obj.delete()
     return redirect('/')
 
 def addImported(data):
@@ -98,8 +94,8 @@ def addImported(data):
         if form.is_valid():
             BookModel.objects.create(**item)
 
-def getISBN(isbnList):
-    for data in isbnList:
+def getISBN(isbn_list):
+    for data in isbn_list:
         if 'ISBN' in data['type']:
             return data['identifier']
     return ''
