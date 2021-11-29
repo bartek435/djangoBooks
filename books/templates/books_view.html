@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="container p-3 my-3 ">
+        <form class="form-horizontal">
+            {% crispy search_form %}
+        </form>
+    </div>
+    <div class="container p-3 my-3">
+        <div style="height: 300px; overflow: scroll;">
+            <table class="get table table-striped table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Publication Date</th>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Number of pages</th>
+                        <th scope="col">Cover</th>
+                        <th scope="col">Language</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in data %}
+                    <tr onclick="location.href='/edit/{{book.id}}'" style="cursor:pointer;">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.date }}</td>
+                        <td>{{ book.isbn }}</td>
+                        <td>{{ book.pages }}</td>
+                        <td>{{ book.cover }}</td>
+                        <td>{{ book.language }}</td>
+                        <td><a href="/delete/{{book.id}}" class="btn btn-danger">Delete</a></td>
+                        </a>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="/edit" class="btn btn-primary">Add</a>
+    </div>
+    <script>
+    $('#sortTable').DataTable();
+    </script>
+</body>
+{% endblock %}

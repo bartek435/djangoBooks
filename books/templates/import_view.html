@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container p-3 my-3 bg-dark text-white">
+    {{ form|as_crispy_errors }}
+    {% crispy form %}
+</div>
+
+{% endblock %}
