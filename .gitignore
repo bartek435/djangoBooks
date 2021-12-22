@@ -1,1 +1,4 @@
 djangoBooks/.env
+*.pyc
+*pycache*
+pylint_check.txt

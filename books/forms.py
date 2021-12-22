@@ -8,24 +8,24 @@ from crispy_forms.bootstrap import FormActions
 
 from .models import BookModel
 
-
 class BookForm(forms.ModelForm):
     title = forms.CharField(label='Title', max_length=75, required=True)
     author = forms.CharField(max_length=50, required=True)
     date = forms.DateField(
         required=True,
-        widget = DatePickerInput(format = "%Y-%m-%d")
+        widget=DatePickerInput(format="%Y-%m-%d"),
+        placeholder="YYYY-mm-dd"
     )
     isbn = forms.CharField(required=True, min_length=13, max_length=13)
     pages = forms.IntegerField(required=True, min_value=0)
     cover = forms.URLField(required=True)
-    language = forms.CharField(max_length = 25, required=True)
+    language = forms.CharField(max_length=25, required=True)
 
     class Meta:
         model = BookModel
         fields = '__all__'
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -65,7 +65,7 @@ class BookForm(forms.ModelForm):
         data = self.cleaned_data.get('isbn')
         if not data.isdigit():
             raise forms.ValidationError("ISBN must be a number")
-        if len(data)!= 13:
+        if len(data) != 13:
             raise forms.ValidationError("ISBN must be 13-digit long")
         return data
     def clean_pages(self):
@@ -79,24 +79,26 @@ class BookForm(forms.ModelForm):
         return data
 
 class SearchBookForm(forms.Form):
-    title = forms.CharField(label='Title', max_length=75,required = False)
-    author = forms.CharField(max_length=50, required = False)
-    dateFrom = forms.DateField(
+    title = forms.CharField(label='Title', max_length=75, required=False)
+    author = forms.CharField(max_length=50, required=False)
+    datefrom = forms.DateField(
         label="Date from",
-        required = False,
-        widget = DatePickerInput(format = "%Y-%m-%d")
+        required=False,
+        widget=DatePickerInput(format="%Y-%m-%d"),
+        placeholder="YYYY-mm-dd"
     )
-    dateTo = forms.DateField(
+    dateto = forms.DateField(
         label="Date to",
-        required = False,
-        widget = DatePickerInput(format = "%Y-%m-%d")
+        required=False,
+        widget=DatePickerInput(format="%Y-%m-%d"),
+        placeholder="YYYY-mm-dd"
     )
-    language = forms.CharField(max_length = 25, required = False)
+    language = forms.CharField(max_length=25, required=False)
 
     class Meta:
         fields = '__all__'
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'get'
@@ -122,30 +124,30 @@ class SearchBookForm(forms.Form):
                 )
             )
         )
-    def clean_dateFrom(self):
-        date = self.cleaned_data.get('dateFrom')
-        return date
-    def clean_dateTo(self):
-        return self.cleanDate()
-    def cleanDate(self):
-        date = []
-        date.append(self.cleaned_data.get('dateFrom'))
-        date.append(self.cleaned_data.get('dateTo'))
-        if None not in date and date[0] > date[1]:
+    def clean_datefrom(self):
+        clean_date = self.cleaned_data.get('datefrom')
+        return clean_date
+    def clean_dateto(self):
+        return self.clean_date()
+    def clean_date(self):
+        dates = []
+        dates.append(self.cleaned_data.get('datefrom'))
+        dates.append(self.cleaned_data.get('dateto'))
+        if None not in dates and dates[0] > dates[1]:
             raise forms.ValidationError("Inappropriate date. Must be older than date from")
-        return date[1]
+        return dates[1]
 
 class ImportForm(forms.Form):
-    q = forms.CharField(label='Keywords', max_length=75,required = False)
-    title = forms.CharField(label='Title', max_length=75,required = False)
-    author = forms.CharField(label='Author', max_length=50, required = False)
-    isbn = forms.CharField(label='ISBN number', max_length = 13, required = False)
-    subject = forms.CharField(label='Subject', max_length = 50, required = False)
+    q = forms.CharField(label='Keywords', max_length=75, required=False)
+    intitle = forms.CharField(label='Title', max_length=75, required=False)
+    inauthor = forms.CharField(label='Author', max_length=50, required=False)
+    isbn = forms.CharField(label='ISBN number', max_length=13, required=False)
+    subject = forms.CharField(label='Subject', max_length=50, required=False)
 
     class Meta:
         fields = '__all__'
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -170,6 +172,6 @@ class ImportForm(forms.Form):
             return data
         if not data.isdigit():
             raise forms.ValidationError("ISBN must be a number")
-        if len(data) not in [10,13]:
-            raise forms.ValidationError("ISBN must be 10/13-digit long")
+        if len(data) not in [10, 13]:
+            raise forms.ValidationError("ISBN must be 10/13 - digit long")
         return data

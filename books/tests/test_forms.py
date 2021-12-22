@@ -2,7 +2,7 @@ from django.test import TestCase
 from books.forms import BookForm, SearchBookForm, ImportForm
 
 class TestForms(TestCase):
-    def testBookForm_valid(self):
+    def test_book_form_valid(self):
         form = BookForm(data={
             'title': 'Test Title',
             'author': 'me',
@@ -13,7 +13,7 @@ class TestForms(TestCase):
             'language': 'eng'
         })
         self.assertTrue(form.is_valid())
-    def testBookForm_invalid(self):
+    def test_book_form_invalid(self):
         forms = []
         forms.append(BookForm(data={
             'title': 'Test Title',
@@ -59,26 +59,26 @@ class TestForms(TestCase):
         }))
         for form in forms:
             self.assertFalse(form.is_valid())
-    def testSearchForm_valid(self):
+    def test_search_form_valid(self):
         form = SearchBookForm(data={
             'title': 'Test Title',
             'dateFrom': '1995-12-2'
         })
         self.assertTrue(form.is_valid())
-    def testSearchForm_invalid(self):
+    def test_search_form_invalid(self):
         form = SearchBookForm(data={
             'title': 'Test Title',
             'dateFrom': '1995-12-2',
             'dateTo': '1995-2-1'
         })
         self.assertFalse(form.is_valid())
-    def testImportForm_valid(self):
+    def test_import_form_valid(self):
         form = ImportForm(data={
             'title': 'Test Title',
             'q': 'test'
         })
         self.assertTrue(form.is_valid())
-    def testImportForm_invalid(self):
+    def test_import_form_invalid(self):
         form = ImportForm(data={
             'title': 'Test Title',
             'q': 'test',

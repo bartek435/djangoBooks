@@ -8,93 +8,89 @@ from django.http import HttpResponse
 from .models import BookModel
 from .forms import BookForm, SearchBookForm, ImportForm
 
-# Create your views here.
-def booksView(request,):
+def books_view(request):
     query_dict = request.GET
     context = {'search_form': SearchBookForm(query_dict)}
-    kwargs = {}
-    if "Rest" in query_dict.get('get',''):
+    if "Rest" in query_dict.get('get', ''):
         return redirect("/rest_books?"+request.META['QUERY_STRING'])
     if context['search_form'].is_valid():
-        for key, value in query_dict.items():
-            if not value or key == 'get':
-                continue
-            if key == 'dateFrom':
-                date = datetime.datetime.strptime(value,"%Y-%m-%d")
-                kwargs['date__gte'] = date
-            elif key == 'dateTo':
-                date = datetime.datetime.strptime(value,"%Y-%m-%d")
-                kwargs['date__lte'] = date
-            else:
-                kwargs['{}__icontains'.format(key)] = value
+        kwargs = get_data_from_query(query_dict.items())
     context['data'] = BookModel.objects.all().filter(**kwargs)
     return render(request, "books_view.html", context)
 
-def editView(request, id=None):
-    if id is not None:
-        book = get_object_or_404(BookModel,id=id)
-        form = BookForm(request.POST or None, instance = book)
-    else :
+def get_data_from_query(query):
+    kwargs = {}
+    for key, value in query:
+        if not value or key == 'get':
+            continue
+        if key == 'dateFrom':
+            date = datetime.datetime.strptime(value, "%Y-%m-%d")
+            kwargs['date__gte'] = date
+        elif key == 'dateTo':
+            date = datetime.datetime.strptime(value, "%Y-%m-%d")
+            kwargs['date__lte'] = date
+        else:
+            kwargs['{}__icontains'.format(key)] = value
+    return kwargs
+
+def edit_view(request, book_id=None):
+    if book_id is not None:
+        book = get_object_or_404(BookModel, id=book_id)
+        form = BookForm(request.POST or None, instance=book)
+    else:
         form = BookForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect("/")
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect("/")
 
-    return render(request,'edit_view.html', {'form':form, 'id': id})
+    return render(request, 'edit_view.html', {'form':form, 'id': id})
 
-def importView(request):
-    form = ImportForm()
-    if request.method == 'POST':
-        form = ImportForm(request.POST)
-        if form.is_valid():
-            query_string = "q="+'&'.join(request.POST.get('q','').split(' '))
-            query_keys = {
-                'title': 'intitle',
-                'author': 'inauthor',
-                'isbn': 'isbn',
-                'subject':
-                'subject'
-            }
-            for key,value in request.POST.items():
-                if key in ['get', 'q'] or not value or 'csrf' in key :
-                    continue
-                query_string += "+"+query_keys[key]+':'+value
-            imported =  HttpResponse(
-                requests.get(
-                    "https://www.googleapis.com/books/v1/volumes?"+query_string
-                    )
-                )
-            imported_dict = json.loads(imported.content)
-            if 'items' in imported_dict:
-                addImported(imported_dict['items'])
-                return redirect('/')
+def import_view(request):
+    form = ImportForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        query_string = get_import_query_string(request.POST)
+        imported = HttpResponse(
+            requests.get(
+                "https://www.googleapis.com/books/v1/volumes?"+query_string
+            )
+        )
+        imported_dict = json.loads(imported.content)
+        if 'items' in imported_dict:
+            add_imported(imported_dict['items'])
+            return redirect('/')
     return render(request, "import_view.html", {'form': form})
 
-def deleteView(request,id =None):
+def get_import_query_string(post):
+    query_string = "q="+'&'.join(post.get('q', '').split(' '))
+    keys = ['q', 'intitle', 'inauthor', 'isbn', 'subject']
+    for key in keys:
+        query_string += "+{}:{}".format(key, post.get(key, ''))
+    return query_string
+
+def delete_view(request, book_id=None):
     if request.method == 'GET':
-        if id == 0:
+        if book_id == 0:
             BookModel.objects.all().delete()
         else:
-            obj = get_object_or_404(BookModel,id=id)
+            obj = get_object_or_404(BookModel, id=book_id)
             obj.delete()
     return redirect('/')
 
-def addImported(data):
-    for d in data:
+def add_imported(imported_data):
+    for data in imported_data:
         item = {}
-        item['title'] = d['volumeInfo']['title']
-        item['author'] = ', '.join(d['volumeInfo'].get('authors', ['']))
-        item['date'] = d['volumeInfo'].get('publishedDate','')
-        item['pages'] = d['volumeInfo'].get('pageCount',None)
-        item['isbn'] = getISBN(d['volumeInfo'].get('industryIdentifiers',[]))
-        item['cover'] = d['volumeInfo']['previewLink']
-        item['language'] = d['volumeInfo']['language']
+        item['title'] = data['volumeInfo']['title']
+        item['author'] = ', '.join(data['volumeInfo'].get('authors', ['']))
+        item['date'] = data['volumeInfo'].get('publishedDate', '')
+        item['pages'] = data['volumeInfo'].get('pageCount', None)
+        item['isbn'] = get_isbn(data['volumeInfo'].get('industryIdentifiers', []))
+        item['cover'] = data['volumeInfo']['previewLink']
+        item['language'] = data['volumeInfo']['language']
         form = BookForm(item)
         if form.is_valid():
             BookModel.objects.create(**item)
 
-def getISBN(isbn_list):
+def get_isbn(isbn_list):
     for data in isbn_list:
         if 'ISBN' in data['type']:
             return data['identifier']
