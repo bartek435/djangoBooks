@@ -9,14 +9,16 @@ from crispy_forms.bootstrap import FormActions
 from .models import BookModel
 
 class BookForm(forms.ModelForm):
-    title = forms.CharField(label='Title', max_length=75, required=True)
-    author = forms.CharField(max_length=50, required=True)
+    title = forms.CharField(label='Title', max_length=100, required=True)
+    author = forms.CharField(max_length=100, required=True)
     date = forms.DateField(
         required=True,
-        widget=DatePickerInput(format="%Y-%m-%d"),
-        placeholder="YYYY-mm-dd"
+        widget=DatePickerInput(
+            attrs={'placeholder':'yyyy-mm-dd'},
+            format="%Y-%m-%d"
+        )
     )
-    isbn = forms.CharField(required=True, min_length=13, max_length=13)
+    isbn = forms.CharField(required=False, min_length=13, max_length=13)
     pages = forms.IntegerField(required=True, min_value=0)
     cover = forms.URLField(required=True)
     language = forms.CharField(max_length=25, required=True)
@@ -63,10 +65,10 @@ class BookForm(forms.ModelForm):
         return data
     def clean_isbn(self):
         data = self.cleaned_data.get('isbn')
-        if not data.isdigit():
+        if data and not data.isdigit():
             raise forms.ValidationError("ISBN must be a number")
-        if len(data) != 13:
-            raise forms.ValidationError("ISBN must be 13-digit long")
+        if data and len(data) not in [10, 13]:
+            raise forms.ValidationError("ISBN must be 10 or 13 digit long")
         return data
     def clean_pages(self):
         data = self.cleaned_data.get('pages')
@@ -79,19 +81,23 @@ class BookForm(forms.ModelForm):
         return data
 
 class SearchBookForm(forms.Form):
-    title = forms.CharField(label='Title', max_length=75, required=False)
-    author = forms.CharField(max_length=50, required=False)
+    title = forms.CharField(label='Title', max_length=100, required=False)
+    author = forms.CharField(max_length=100, required=False)
     datefrom = forms.DateField(
         label="Date from",
         required=False,
-        widget=DatePickerInput(format="%Y-%m-%d"),
-        placeholder="YYYY-mm-dd"
+        widget=DatePickerInput(
+            attrs={'placeholder':'yyyy-mm-dd'},
+            format="%Y-%m-%d"
+        )
     )
     dateto = forms.DateField(
         label="Date to",
         required=False,
-        widget=DatePickerInput(format="%Y-%m-%d"),
-        placeholder="YYYY-mm-dd"
+        widget=DatePickerInput(
+            attrs={'placeholder':'yyyy-mm-dd'},
+            format="%Y-%m-%d"
+        )
     )
     language = forms.CharField(max_length=25, required=False)
 
@@ -109,8 +115,8 @@ class SearchBookForm(forms.Form):
                 Column('author')
             ),
             Row(
-                Column('dateFrom'),
-                Column('dateTo')
+                Column('datefrom'),
+                Column('dateto')
             ),
             'language',
             FormActions(
@@ -139,8 +145,8 @@ class SearchBookForm(forms.Form):
 
 class ImportForm(forms.Form):
     q = forms.CharField(label='Keywords', max_length=75, required=False)
-    intitle = forms.CharField(label='Title', max_length=75, required=False)
-    inauthor = forms.CharField(label='Author', max_length=50, required=False)
+    intitle = forms.CharField(label='Title', max_length=100, required=False)
+    inauthor = forms.CharField(label='Author', max_length=100, required=False)
     isbn = forms.CharField(label='ISBN number', max_length=13, required=False)
     subject = forms.CharField(label='Subject', max_length=50, required=False)
 
@@ -155,8 +161,8 @@ class ImportForm(forms.Form):
         self.helper.layout = Layout(
             'q',
             Row(
-                Column('title'),
-                Column('author')
+                Column('intitle'),
+                Column('inauthor')
             ),
             Row(
                 Column('isbn'),

@@ -1,4 +1,5 @@
- pylint djangoBooks/books --disable=missing-docstring --class-naming-style='PascalCase' --function-naming-style='snake_case' --variable-naming-style='snake_case' --method-naming-style='snake_case'
+pylint djangoBooks/books --disable=missing-docstring --class-naming-style='PascalCase' --function-naming-style='snake_case' --variable-naming-style='snake_case' --method-naming-style='snake_case' --generated-members='object' --min-public-methods=0 --max-attributes=10
+
  
  
 ************* Module books.admin

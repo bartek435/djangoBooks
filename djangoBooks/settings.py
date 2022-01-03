@@ -17,13 +17,13 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
 USE_L10N = False
 DATE_FORMAT = "Y-m-d"
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

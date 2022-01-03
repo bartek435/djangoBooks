@@ -61,10 +61,13 @@ def import_view(request):
     return render(request, "import_view.html", {'form': form})
 
 def get_import_query_string(post):
-    query_string = "q="+'&'.join(post.get('q', '').split(' '))
-    keys = ['q', 'intitle', 'inauthor', 'isbn', 'subject']
+    query_string = 'q={}'.format(post.get('q', ''))
+    keys = ['intitle', 'inauthor', 'isbn', 'subject']
     for key in keys:
-        query_string += "+{}:{}".format(key, post.get(key, ''))
+        value = post.get(key, '')
+        if value == '':
+            continue
+        query_string += "+{}:{}".format(key, value)
     return query_string
 
 def delete_view(request, book_id=None):
@@ -81,7 +84,7 @@ def add_imported(imported_data):
         item = {}
         item['title'] = data['volumeInfo']['title']
         item['author'] = ', '.join(data['volumeInfo'].get('authors', ['']))
-        item['date'] = data['volumeInfo'].get('publishedDate', '')
+        item['date'] = get_date(data['volumeInfo'].get('publishedDate', ''))
         item['pages'] = data['volumeInfo'].get('pageCount', None)
         item['isbn'] = get_isbn(data['volumeInfo'].get('industryIdentifiers', []))
         item['cover'] = data['volumeInfo']['previewLink']
@@ -95,3 +98,12 @@ def get_isbn(isbn_list):
         if 'ISBN' in data['type']:
             return data['identifier']
     return ''
+
+def get_date(date_string):
+    data = date_string.split('-')
+    date_string = "{}-{}-{}".format(
+        data[0],
+        data[1] if len(data) >= 2 else '1',
+        data[2] if len(data) >= 3 else '1'
+    )
+    return date_string
