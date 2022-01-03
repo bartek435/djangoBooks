@@ -9,7 +9,6 @@ class BooksRestView(APIView):
     def get(self, request):
         kwargs = get_data_from_query(request.GET.items())
         kwargs.pop('format__icontains', '')
-        print(kwargs)
         books = BookModel.objects.all().filter(**kwargs)
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
